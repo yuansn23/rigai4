@@ -1,0 +1,165 @@
+<html lang="ja"><head>
+<style>
+ .footer-section {
+            background-color: #f1f1f1;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer-links {
+            display: inline-block;
+        }
+        .footer-link {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+		</style>
+<script>
+
+ function openSite() {
+				window.location.href = "https://www.qq.com";
+        
+			}
+			
+</script>
+</head><body>﻿
+
+	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>AIによる株価予測</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="css/style.css">
+	 
+	
+		<div class="container">
+			<img src="images/6.gif" alt="AIロボット" class="robot-image">
+			<div class="title-box">
+				2025年最強AI株価予測
+			</div>
+			<div class="info-box">
+				<p><strong>予測精度は99.8%に達します</strong></p>
+				<p>
+					銘柄名またはコードを入力すると、AIが約0.5秒で診断を実行。ファンダメンタルズ、テクニカル指標、短期トレンドを総合的に分析します。</p>
+				<p>現在、<span class="highlight">20238</span>人以上の投資家が当ツールを利用し、相場の重要な動きを捉えています。まずは1銘柄でお試しください。
+				</p>
+			</div>
+			<div class="input-container">
+				<input type="text" class="stock-input" placeholder="会社名またはティッカーを入力してください" id="stockInput">
+			</div>
+			<button class="analyze-btn" onclick="showProgressModal()">
+				分析を開始する
+			</button>
+			<div class="footer">
+				<p>※当サイトで提供される情報は、情報提供のみを目的としており、特定の証券、投資戦略の推奨を構成するものではありません。投資には元本割れのリスクが伴います。</p>
+			</div>
+		</div>
+		<div id="progressModal" class="modal" style="display: none;">
+			<div class="modal-content">
+				<span class="close" onclick="closeProgressModal()">×</span>
+				<h3 class="modal-title">AIシステム分析中</h3>
+
+				<div class="progress-analysis">
+					<div class="analysis-type"><i class="fas fa-chart-line"></i> 市場分析</div>
+					<div class="analysis-type"><i class="fas fa-newspaper"></i> 最新ニュース</div>
+					<div class="analysis-type"><i class="fas fa-history"></i> 過去データ</div>
+				</div>
+
+				<div class="progress-container">
+					<svg class="progress-ring" width="150" height="150">
+						<circle class="progress-bg" cx="75" cy="75" r="65"></circle>
+						<circle class="progress-ring__circle" cx="75" cy="75" r="65" stroke-dasharray="408.4" stroke-dashoffset="408.4" style="stroke-dasharray: 408.407, 408.407; stroke-dashoffset: 0;">
+						</circle>
+					</svg>
+					<div class="progress-text">100%</div>
+				</div>
+
+				<p>高度なAIが多角的なデータを分析しています...</p>
+			</div>
+		</div>
+
+		<div id="resultsModal" class="modal" style="display: none;">
+			<div class="modal-content">
+				<span class="close" onclick="closeResultsModal()">×</span>
+				<h3 class="modal-title">分析完了</h3>
+				<p class="modal-text">
+					あなたの株式分析レポートが完成しました。<br>
+					さらに<span class="highlight">今月の高成長見込み10銘柄リスト</span>も贈呈します。<br><br>
+					<span class="highlight">本日の無料枠はあと35名様</span>のみです。
+				</p>
+				<p class="modal-text">下記LINEリンクからレポートを受け取れます。</p>
+				<button class="modal-btn" onclick="openSite()">
+					<i class="fab fa-line"></i> LINEでレポートを受け取る
+				</button>
+			</div>
+		</div>
+ <footer class="footer-section">
+            <div class="footer-links">
+                <a href="Privacy.html" class="footer-link" target="_blank">プライバシーポリシー</a>
+                <a href="terms.html" class="footer-link" target="_blank">利用規約</a>
+				  <a href="Disclaimer.html" class="footer-link" target="_blank">免責事項</a>
+            </div>
+        </footer>
+		<script>
+			// Circle Progress Animation
+			function setProgress(percent) {
+				const circle = document.querySelector('.progress-ring__circle');
+				const text = document.querySelector('.progress-text');
+				const radius = circle.r.baseVal.value;
+				const circumference = radius * 2 * Math.PI;
+
+				circle.style.strokeDasharray = `${circumference} ${circumference}`;
+				const offset = circumference - (percent / 100) * circumference;
+				circle.style.strokeDashoffset = offset;
+				text.textContent = Math.round(percent) + '%';
+			}
+
+			function animateProgress(duration) {
+				const startTime = Date.now();
+
+				function updateProgress() {
+					const elapsed = Date.now() - startTime;
+					const progress = Math.min(100, (elapsed / duration) * 100);
+
+					setProgress(progress);
+
+					if (progress < 100) {
+						requestAnimationFrame(updateProgress);
+					} else {
+						// Show results modal when progress reaches 100%
+						setTimeout(() => {
+							closeProgressModal();
+							document.getElementById('resultsModal').style.display = 'flex';
+						}, 500);
+					}
+				}
+
+				updateProgress();
+			}
+
+			// Show progress modal
+			function showProgressModal() {
+				document.getElementById('progressModal').style.display = 'flex';
+				animateProgress(1500); // 1.5 seconds for progress animation
+			}
+
+			// Close progress modal
+			function closeProgressModal() {
+				document.getElementById('progressModal').style.display = 'none';
+			}
+
+			// Close results modal
+			function closeResultsModal() {
+				document.getElementById('resultsModal').style.display = 'none';
+			}
+
+			
+			
+			
+		</script>
+
+
+	
+</body></html>
